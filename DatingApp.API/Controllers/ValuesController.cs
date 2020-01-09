@@ -6,6 +6,7 @@ using DatingApp.API.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using DatingApp.API.Models;
 
 namespace DatingApp.API.Controllers
 {
@@ -32,6 +33,17 @@ namespace DatingApp.API.Controllers
         {
             var values = await _context.Values.FirstOrDefaultAsync(x=>x.Id == id);
             return Ok(values);
+        }
+
+         [HttpPost]
+        public async Task<IActionResult> Post(string name)
+        {
+            Value Value = new Value(){
+                Name = name
+            };
+            var values = await _context.Values.AddAsync(Value);
+            await _context.SaveChangesAsync();
+            return Ok(201);
         }
     }
 }
