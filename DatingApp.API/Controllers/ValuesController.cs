@@ -10,6 +10,7 @@ using DatingApp.API.Models;
 
 namespace DatingApp.API.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("api/[controller]")]
     public class ValuesController : ControllerBase
@@ -22,14 +23,15 @@ namespace DatingApp.API.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Get()
+        public async Task<IActionResult> GetValues()
         {
             var values = await _context.Values.ToListAsync();
             return Ok(values);
         }
 
+        [AllowAnonymous]
         [HttpGet("{id}")]
-        public async Task<IActionResult> Get(int id)
+        public async Task<IActionResult> GetValues(int id)
         {
             var values = await _context.Values.FirstOrDefaultAsync(x=>x.Id == id);
             return Ok(values);
